@@ -1,27 +1,299 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Fancy Form</title>
-
-  <!-- You may add more stuff here -->
-  <link href="style.css" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Modern token swapping interface with real-time price updates and intuitive user experience">
+  <meta name="keywords" content="token swap, cryptocurrency, DeFi, trading, blockchain">
+  <meta name="author" content="Senior Software Engineer">
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Token Swap Application">
+  <meta property="og:description" content="Modern token swapping interface with real-time price updates">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Token Swap Application">
+  <meta name="twitter:description" content="Modern token swapping interface with real-time price updates">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔄</text></svg>">
+  
+  <!-- Preconnect to external domains for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://raw.githubusercontent.com">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSEYGaVnLmJbnhqN9u0rR9qN9S+5A+q+5Q==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  
+  <!-- Styles -->
+  <link href="style.css" rel="stylesheet">
+  
+  <title>Token Swap Application</title>
 </head>
 
 <body>
+  <!-- Skip to main content for accessibility -->
+  <a href="#main-content" class="sr-only">Skip to main content</a>
+  
+  <!-- Main Container -->
+  <div class="container" role="main" id="main-content">
+    <!-- Swap Card -->
+    <article class="swap-card" role="region" aria-labelledby="swap-title">
+      <!-- Card Header -->
+      <header class="card-header">
+        <h1 id="swap-title">Swap Tokens</h1>
+        <p>Exchange one token for another with real-time pricing</p>
+      </header>
 
-  <!-- You may reorganise the whole HTML, as long as your form achieves the same effect. -->
-  <form onsubmit="return !1">
-    <h5>Swap</h5>
-    <label for="input-amount">Amount to send</label>
-    <input id="input-amount" />
+      <!-- Swap Form -->
+      <form id="swap-form" class="swap-form" novalidate>
+        <!-- From Token Section -->
+        <section class="token-section" aria-labelledby="from-token-label">
+          <label id="from-token-label" class="section-label" for="from-amount">
+            You Pay
+          </label>
+          <div class="token-input-group" role="group" aria-labelledby="from-token-label">
+            <!-- Token Selector -->
+            <button 
+              type="button" 
+              id="from-token-selector" 
+              class="token-selector"
+              aria-haspopup="true"
+              aria-expanded="false"
+              aria-label="Select token to pay"
+            >
+              <img 
+                src="https://raw.githubusercontent.com/Switcheo/token-icons/main/tokens/SWTH.svg" 
+                alt="SWTH" 
+                class="token-icon" 
+                id="from-token-icon"
+                width="32"
+                height="32"
+              >
+              <span class="token-symbol" id="from-token-symbol">SWTH</span>
+              <i class="fas fa-chevron-down" aria-hidden="true"></i>
+            </button>
+            
+            <!-- Amount Input Container -->
+            <div class="amount-input-container">
+              <input 
+                type="number" 
+                id="from-amount" 
+                class="amount-input" 
+                placeholder="0.0"
+                step="0.000001"
+                min="0"
+                aria-describedby="from-balance-info"
+                aria-label="Amount to pay"
+                autocomplete="off"
+                inputmode="decimal"
+              >
+              <div class="balance-info" id="from-balance-info">
+                <span class="balance-label">Balance:</span>
+                <span class="balance-amount" id="from-balance" aria-live="polite">0.00</span>
+              </div>
+            </div>
+          </div>
+        </section>
 
-    <label for="output-amount">Amount to receive</label>
-    <input id="output-amount" />
+        <!-- Swap Direction Button -->
+        <div class="swap-direction" role="group" aria-label="Swap direction controls">
+          <button 
+            type="button" 
+            id="swap-direction-btn" 
+            class="swap-btn"
+            aria-label="Swap token positions"
+            title="Swap token positions"
+          >
+            <i class="fas fa-arrow-down" aria-hidden="true"></i>
+          </button>
+        </div>
 
-    <button>CONFIRM SWAP</button>
-  </form>
+        <!-- To Token Section -->
+        <section class="token-section" aria-labelledby="to-token-label">
+          <label id="to-token-label" class="section-label" for="to-amount">
+            You Receive
+          </label>
+          <div class="token-input-group" role="group" aria-labelledby="to-token-label">
+            <!-- Token Selector -->
+            <button 
+              type="button" 
+              id="to-token-selector" 
+              class="token-selector"
+              aria-haspopup="true"
+              aria-expanded="false"
+              aria-label="Select token to receive"
+            >
+              <img 
+                src="https://raw.githubusercontent.com/Switcheo/token-icons/main/tokens/ETH.svg" 
+                alt="ETH" 
+                class="token-icon" 
+                id="to-token-icon"
+                width="32"
+                height="32"
+              >
+              <span class="token-symbol" id="to-token-symbol">ETH</span>
+              <i class="fas fa-chevron-down" aria-hidden="true"></i>
+            </button>
+            
+            <!-- Amount Input Container -->
+            <div class="amount-input-container">
+              <input 
+                type="number" 
+                id="to-amount" 
+                class="amount-input" 
+                placeholder="0.0"
+                step="0.000001"
+                min="0"
+                readonly
+                aria-describedby="to-balance-info"
+                aria-label="Amount to receive (calculated automatically)"
+                autocomplete="off"
+                inputmode="decimal"
+              >
+              <div class="balance-info" id="to-balance-info">
+                <span class="balance-label">Balance:</span>
+                <span class="balance-amount" id="to-balance" aria-live="polite">0.00</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Exchange Rate Information -->
+        <section 
+          class="exchange-info" 
+          id="exchange-info" 
+          style="display: none;"
+          aria-live="polite"
+          aria-label="Exchange rate information"
+        >
+          <div class="rate-info">
+            <span>Exchange Rate</span>
+            <span id="exchange-rate">1 SWTH = 0.0001 ETH</span>
+          </div>
+          <div class="slippage-info">
+            <span>Slippage Tolerance</span>
+            <span>0.5%</span>
+          </div>
+        </section>
+
+        <!-- Error Messages -->
+        <div 
+          class="error-message" 
+          id="error-message" 
+          style="display: none;"
+          role="alert"
+          aria-live="assertive"
+        >
+          <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+          <span id="error-text"></span>
+        </div>
+
+        <!-- Submit Button -->
+        <button 
+          type="submit" 
+          id="swap-button" 
+          class="swap-submit-btn" 
+          disabled
+          aria-describedby="btn-text"
+        >
+          <span class="btn-text" id="btn-text">Enter an amount</span>
+          <div class="loading-spinner" style="display: none;" aria-hidden="true">
+            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+          </div>
+        </button>
+      </form>
+    </article>
+
+    <!-- Token Selection Modal -->
+    <div 
+      class="modal-overlay" 
+      id="token-modal" 
+      style="display: none;"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+      aria-describedby="modal-description"
+    >
+      <div class="modal">
+        <!-- Modal Header -->
+        <header class="modal-header">
+          <h3 id="modal-title">Select Token</h3>
+          <button 
+            type="button" 
+            class="modal-close" 
+            id="modal-close"
+            aria-label="Close token selection"
+          >
+            <i class="fas fa-times" aria-hidden="true"></i>
+          </button>
+        </header>
+        
+        <!-- Modal Search -->
+        <div class="modal-search">
+          <label for="token-search" class="sr-only">Search tokens</label>
+          <input 
+            type="text" 
+            id="token-search" 
+            placeholder="Search tokens..." 
+            class="search-input"
+            aria-describedby="modal-description"
+            autocomplete="off"
+          >
+        </div>
+        
+        <!-- Modal Description for Screen Readers -->
+        <div id="modal-description" class="sr-only">
+          Use the search box to filter tokens. Click on a token to select it.
+        </div>
+        
+        <!-- Token List -->
+        <div class="token-list" id="token-list" role="listbox" aria-label="Available tokens">
+          <!-- Token options will be populated here by JavaScript -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State Indicator -->
+  <div id="app-loading" class="sr-only" aria-live="polite">
+    Loading token swap application...
+  </div>
+
+  <!-- Error Boundary for JavaScript -->
+  <div id="js-error" class="sr-only" role="alert" aria-live="assertive"></div>
+
+  <!-- Scripts -->
   <script src="script.js"></script>
+  
+  <!-- Performance Monitoring -->
+  <script>
+    // Performance monitoring for senior-level debugging
+    if (typeof performance !== 'undefined') {
+      window.addEventListener('load', () => {
+        const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+        console.log(`Application loaded in ${loadTime}ms`);
+      });
+    }
+    
+    // Error boundary for JavaScript errors
+    window.addEventListener('error', (event) => {
+      console.error('JavaScript Error:', event.error);
+      const errorDiv = document.getElementById('js-error');
+      if (errorDiv) {
+        errorDiv.textContent = 'An error occurred. Please refresh the page.';
+        errorDiv.classList.remove('sr-only');
+      }
+    });
+  </script>
 </body>
-
 </html>
